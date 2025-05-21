@@ -146,7 +146,6 @@ const BOOKS = [
 ]
 
 /***/
-
 const renderAuthor = (ketab) => {
     const authorDiv = document.getElementById("author");
     const newAuthor = [];
@@ -190,14 +189,7 @@ const showBooks = (ketab) => {
                 `
     }).join("")
 }
-
-
-
-
-
-
 let nonRepetitiveVal = { author: [], language: [], genre: [] };
-
 const nonRepetitiveFunction = mainBook => {
     for (let i = 0; i < mainBook.length; i++) {
         let currentAuthor = mainBook[i].author;
@@ -211,17 +203,14 @@ const nonRepetitiveFunction = mainBook => {
             nonRepetitiveVal.genre.push(currentGenre);
     }
 };
-
 nonRepetitiveFunction(BOOKS);
-console.log(nonRepetitiveVal);
-
-
 function changeCheckbox() {
     const checkboxs = document.querySelectorAll("input[type='checkbox']");
     checkboxs.forEach(item => {
         item.addEventListener("change", showBooksCheckbox);
     });
 }
+
 
 function showBooksCheckbox() {
     const activeCheckboxsAuthors = document.querySelectorAll("input[name='author']:checked");
@@ -238,8 +227,6 @@ function showBooksCheckbox() {
     });
     showBooks(filteredBooks);
 }
-
-
 
 renderAuthor(BOOKS);
 renderLanguage(BOOKS);

@@ -154,8 +154,7 @@ const renderAuthor = (ketab) => {
         if (!newAuthor.includes(ketab[i].author))
             newAuthor.push(ketab[i].author)
     }
-    authorDiv.innerHTML = newAuthor.map((item) => `<label><input type="checkbox" name="نویسنده" value="${item}" /> ${item}</label><br>`).join("");
-
+    authorDiv.innerHTML = newAuthor.map((item) => `<label><input type="checkbox" name="author" value="${item}" /> ${item}</label><br>`).join("");
 };
 const renderLanguage = (ketab) => {
     const languageDiv = document.getElementById("language");
@@ -164,7 +163,7 @@ const renderLanguage = (ketab) => {
         if (!newlanguage.includes(ketab[i].language))
             newlanguage.push(ketab[i].language)
     }
-    languageDiv.innerHTML = newlanguage.map((item) => `<label><input type="checkbox" name="نویسنده" value="${item}" /> ${item}</label><br>`).join("");
+    languageDiv.innerHTML = newlanguage.map((item) => `<label><input type="checkbox" name="language" value="${item}" /> ${item}</label><br>`).join("");
 
 };
 const renderGenre = (ketab) => {
@@ -174,8 +173,7 @@ const renderGenre = (ketab) => {
         if (!newGenre.includes(ketab[i].genre))
             newGenre.push(ketab[i].genre)
     }
-    genreeDiv.innerHTML = newGenre.map((item) => `<label><input type="checkbox" name="نویسنده" value="${item}" /> ${item}</label><br>`).join("");
-
+    genreeDiv.innerHTML = newGenre.map((item) => `<label><input type="checkbox" name="genre" value="${item}" /> ${item}</label><br>`).join("");
 };
 const showBooks = (ketab) => {
     const leftDiv = document.getElementById("left");
@@ -192,6 +190,38 @@ const showBooks = (ketab) => {
                `
     }).join("")
 }
+
+
+
+
+
+
+let nonRepetitiveVal = { author: [], language: [], genre: [] };
+
+const nonRepetitiveFunction = mainBook => {
+    for (let i = 0; i < mainBook.length; i++) {
+        let currentAuthor = mainBook[i].author;
+        if (!nonRepetitiveVal.author.includes(currentAuthor))
+            nonRepetitiveVal.author.push(currentAuthor);
+        let currentLanguage = mainBook[i].language;
+        if (!nonRepetitiveVal.language.includes(currentLanguage))
+            nonRepetitiveVal.language.push(currentLanguage);
+        let currentGenre = mainBook[i].genre;
+        if (!nonRepetitiveVal.genre.includes(currentGenre))
+            nonRepetitiveVal.genre.push(currentGenre);
+
+
+    }
+};
+
+nonRepetitiveFunction(BOOKS);
+console.log(nonRepetitiveVal);
+
+
+function checkbox() {
+}
+checkbox();
+
 renderGenre(BOOKS);
 renderAuthor(BOOKS);
 renderLanguage(BOOKS);

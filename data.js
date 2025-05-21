@@ -179,15 +179,15 @@ const showBooks = (ketab) => {
     const leftDiv = document.getElementById("left");
     leftDiv.innerHTML = ketab.map((item) => {
         return `<div class="container-book">
-                    <img src="assets/photo/${item.id}.jpg" alt="book${item.id}">
-                    <h3>${item.title}</h3>
-                    <div class="flex">
-                    <p>نویسنده:${item.author}</p>
-                    <p>سال انتشار : ${item.published_date} میلادی</p>
-                    </div>
+                        <img src="assets/photo/${item.id}.jpg" alt="book${item.id}">
+                        <h3>${item.title}</h3>
+                        <div class="flex">
+                        <p>نویسنده:${item.author}</p>
+                        <p>سال انتشار : ${item.published_date} میلادی</p>
+                        </div>
 
-                </div>
-               `
+                    </div>
+                `
     }).join("")
 }
 
@@ -209,8 +209,6 @@ const nonRepetitiveFunction = mainBook => {
         let currentGenre = mainBook[i].genre;
         if (!nonRepetitiveVal.genre.includes(currentGenre))
             nonRepetitiveVal.genre.push(currentGenre);
-
-
     }
 };
 
@@ -218,11 +216,33 @@ nonRepetitiveFunction(BOOKS);
 console.log(nonRepetitiveVal);
 
 
-function checkbox() {
+function changeCheckbox() {
+    const checkboxs = document.querySelectorAll("input[type='checkbox']");
+    checkboxs.forEach(item => {
+        item.addEventListener("change", showBooksCheckbox);
+    });
 }
-checkbox();
 
-renderGenre(BOOKS);
+function showBooksCheckbox() {
+    const activeCheckboxsAuthors = document.querySelectorAll("input[name='author']:checked");
+    let saveAuthors = [...activeCheckboxsAuthors].map(item => item.value);
+    const activeCheckboxsLanguages = document.querySelectorAll("input[name='language']:checked");
+    let saveLanguages = [...activeCheckboxsLanguages].map(item => item.value);
+    const activeCheckboxsGenres = document.querySelectorAll("input[name='genre']:checked");
+    let saveGenres = [...activeCheckboxsGenres].map(item => item.value);
+    const filteredBooks = BOOKS.filter(book => {
+        const authorMatch = saveAuthors.length === 0 || saveAuthors.includes(book.author);
+        const languageMatch = saveLanguages.length === 0 || saveLanguages.includes(book.language);
+        const genreMatch = saveGenres.length === 0 || saveGenres.includes(book.genre);
+        return authorMatch && languageMatch && genreMatch;
+    });
+    showBooks(filteredBooks);
+}
+
+
+
 renderAuthor(BOOKS);
 renderLanguage(BOOKS);
+renderGenre(BOOKS);
+changeCheckbox();
 showBooks(BOOKS);
